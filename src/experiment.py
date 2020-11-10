@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import List
+from typing import List, Union
 
 from bandits.agent import Bandit
 
@@ -63,6 +63,7 @@ def experiment(probabilities: List[float], num_trials: int, epsilon: float):
     win_rates = cumulative_rewards / (np.arange(num_trials) + 1)
     plt.plot(win_rates, label='Actual win rate', c='b')
     plt.plot(np.ones(num_trials) * np.max(probabilities), label='Optimal bandit win rate', c='red')
+    plt.xscale('log')
     plt.legend()
     plt.grid(c='k', ls=':')
     plt.tight_layout()
