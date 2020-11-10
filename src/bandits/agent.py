@@ -3,8 +3,10 @@ import matplotlib.pyplot as plt
 
 
 class Bandit:
-    """
-    One-armed bandit (slot machine).
+    """One-armed bandit (slot machine).
+
+    :param p: Represents the true win rate for the bandit.
+    :type p: float
     """
     def __init__(self, p: float):
         self.p: float = p
