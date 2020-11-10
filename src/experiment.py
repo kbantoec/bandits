@@ -25,7 +25,7 @@ def experiment(probabilities: List[float], num_trials: int, epsilon: float):
     num_times_exploited: int = 0
     num_optimal: int = 0
 
-    # The optimal j is the bandit with the highest probability of winning (should not be known in reality)
+    # The optimal_j is the bandit with the highest probability of winning (should not be known in reality)
     optimal_j = np.argmax([b.p for b in bandits])
     print(f"optimal_j: {optimal_j}")
 
@@ -49,13 +49,14 @@ def experiment(probabilities: List[float], num_trials: int, epsilon: float):
         # Update the the p_estimate attribute for the bandit whose arm we just pulled
         bandits[j].update(x)
 
-    for b in bandits:
-        print(f"Mean winning probability estimate: {b.p_estimate}")
+    for i, b in enumerate(bandits):
+        print(f"Mean winning probability estimate for bandit at index {i}: {b.p_estimate:.3f}")
 
     print(f"Total reward earned: {rewards.sum()}")
     print(f"Overall win rate: {rewards.sum() / num_trials}")
     print(f"Number of explorations: {num_times_explored}")
     print(f"Number of exploitations: {num_times_exploited}")
+    print(f"Exploration-Exploitation ratio: {num_times_explored / num_times_exploited:.3f}")
     print(f"Number of times we have selected the optimal bandit: {num_optimal}")
 
     cumulative_rewards = np.cumsum(rewards)
@@ -65,11 +66,12 @@ def experiment(probabilities: List[float], num_trials: int, epsilon: float):
     plt.legend()
     plt.grid(c='k', ls=':')
     plt.tight_layout()
+    # plt.savefig('one_arm_bandit.png', dpi=600, transparent=True)
     plt.show()
 
 
 if __name__ == '__main__':
-    bandit_probabilities: List[float] = [0.2, 0.5, 0.75]
+    bandit_probabilities: List[float] = [0.2, 0.5, 0.75]  # Probabilities for each bandit
     epsilon: float = 0.1
     num_trials: int = 10_000
 
